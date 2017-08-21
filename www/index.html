@@ -1,182 +1,12 @@
-# WeChat Project
-
-WeChat Project objectives is intergrated  communication for android .
-
-## Structure 
-![image](https://raw.githubusercontent.com/xhsiung/wechat2/master/imgs/flow.png)
-
-## Installation
-```install
-cordova create mywechat
-cd mywechat
-cordova platform add android
-cordova plugin add https://github.com/xhsiung/wechat2.git
-cordova run android
-```
-
-Server
-```server
-echo "deb http://axsoho.com/debs/tos tosdev main contrib non-free" | sudo tee -a /etc/apt/sources.list.d/axsoho.list
-sudo apt-get update 
-sudo apt-get install node
-#sudo apt-get install noapp
-sudo apt-get install mongo
-```
-
-## Usage
-
-connect  server initConn
-```initConnect
-wechat.initConn();
-```
-
-connect server
-```
-wechat.connect();
-```
-
-disconnect server
-```
-wechat.disconnect();
-```
-
-subscribe  
-```
-wechat.subscribe();
-```
-
-unsubscribe  
-```
-wechat.unsubscribe();
-```
-
-multiSubscribe  
-```
-wechat.multiSubscribe();
-```
-
-multiUnSubscribe  
-```
-wechat.multiUnSubscribe();
-```
-
-send
-```
-wechat.send();
-```
-
-querydbdate
-```
-wechat.querydbdate();
-```
-
-deviceid
-```
-wechat.deviceid
-```
-
-wechatOnConnectError(data)
-```
-function wechatOnConnectError(data){})
-```
-
-register
-```
-wechat.register(args,errorCallback)
-```
-
-rereaded
-```
-wechat.rereaded(args)
-```
-
-getContacts
-```
-wechat.getContacts(successCallback,errorCallback)
-```
-
-existOwner
-```
-wecaht.existOwner(successCallbcak)
-```
-
-getInviteChann
-```
-wechat.getInviteChann(sid,tid)
-```
-
-unreadchat
-```
-wechat.unreadchat(successCallback,errorCallback)
-```
-
-secretInvite
-```
-wechat.secretInvite(args)
-```
-
-del_chat_history
-```
-wechat.del_chat_history(args,successCallbcak)
-```
-
-undelivered
-```
-wechat.undelivered(successCallbcak)
-```
-
-openrooms
-```
-wechat.openrooms(args,function(successCallbcak){})
-```
-
-getOpenRooms
-```
-wechat.getOpenRooms(args,function(successCallbcak){})
-```
-
-getOnLineUsers
-```
-wechat.getOnLineUsers(args,function(successCallbcak){})
-```
-
-crudNews
-```
-wechat.crudNews(args,function(successCallbcak){})
-```
-
-crudTsFlag
-```
-wechat.crudTsFlag(args,function(successCallbcak){})
-```
-
-resetdb
-```
-wechat.resetdb(args,function(errorCallbcak){})
-```
-
-wechatOnInviteRecived
-```
-function wechatOnInviteRecived( obj ){}
-```
-
-wechatOnUnReadChat
-```
-function wechatOnUnReadChat( obj ){}
-```
-
-wechatOnUnReadChatInit
-```
-function wechatOnUnReadChatInit( obj ){}
-```
-
- 
-Sample
-```
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' * data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
     <title>Hello World</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
@@ -305,8 +135,9 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
    //save
    function saveChatSettings(){
-        var conf = { serverip: "",
-                    port: 0,
+        var conf = { serverip: "wechat.ebais.com.tw",
+                    port: 3002,
+                    protocol: "https",
                     notifyTarget: "tw.com.bais.wechat.MainActivity",
                     hasNotify: 1,
                     notifyTitle: "",
@@ -638,16 +469,15 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
    //resetdb
    function resetdb(){
-	var pack = { db:"ChatHistory|Contacts|OpenRooms|ChatNews|ChatTsFlag|ChatSyncTs"};
-        wechat.resetdb( pack ,function(data){
+        wechat.resetdb(function(){
             console.log("error");
         });
    }
 
    //clear
    function clearall(){
-        resetdb();
-	wechat.clear();
+        alert("clear");
+        wechat.clear();
    }
 
    //isConnected
@@ -797,17 +627,3 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
 </body>
 </html>
-```
-
-## Current status
-
-Done  work:
-* Auto  Connect  and Reconnect  your Server
-* Auto Subscirbe  your  device.uuid   channel
-* Always  Service  is  running
-
-## History
-
-* **v3.1.2** : 2017-08-11
-* **v3.1.1** : 2017-08-08
-* **v3.0.105** : 2017-02-18
