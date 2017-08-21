@@ -311,7 +311,7 @@ data:<input type="text" id="xmsg"  value="mymessage">
    //save
    function saveChatSettings(){
         var conf = { serverip: "",
-                    port: ,
+                    port: 0,
                     protocol: "https",
                     notifyTarget: "tw.com.bais.wechat.MainActivity",
                     hasNotify: 1,
