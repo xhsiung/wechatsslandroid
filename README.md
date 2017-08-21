@@ -177,6 +177,11 @@ Sample
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' * data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
     <title>Hello World</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
@@ -306,7 +311,8 @@ data:<input type="text" id="xmsg"  value="mymessage">
    //save
    function saveChatSettings(){
         var conf = { serverip: "",
-                    port: 0,
+                    port: ,
+                    protocol: "https",
                     notifyTarget: "tw.com.bais.wechat.MainActivity",
                     hasNotify: 1,
                     notifyTitle: "",
@@ -638,16 +644,15 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
    //resetdb
    function resetdb(){
-	var pack = { db:"ChatHistory|Contacts|OpenRooms|ChatNews|ChatTsFlag|ChatSyncTs"};
-        wechat.resetdb( pack ,function(data){
+        wechat.resetdb(function(){
             console.log("error");
         });
    }
 
    //clear
    function clearall(){
-        resetdb();
-	wechat.clear();
+        alert("clear");
+        wechat.clear();
    }
 
    //isConnected
