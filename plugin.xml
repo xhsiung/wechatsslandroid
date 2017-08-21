@@ -34,7 +34,6 @@
 
 	<config-file target="AndroidManifest.xml" parent="/manifest/application">
 		<service android:name="tw.com.bais.wechat.EBusService" android:priority="1000" android:enabled="true" android:exported="true" />
-		<provider android:name="tw.com.bais.wechat.WeChatCP"   android:authorities="wechatcp.bais.com.tw" android:enabled="true" android:exported="true" />
 		<receiver android:name="tw.com.bais.wechat.BootReceiver" android:enabled="true" android:exported="true" >
             		<intent-filter>
                 		<action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -49,7 +48,7 @@
 	<source-file src="libs/eventbus-3.0.0.jar" target-dir="libs" />
 	<source-file src="libs/android-async-http-1.4.9.jar" target-dir="libs" />
 	<source-file src="libs/httpclient-4.3.6.jar" target-dir="libs" />
-	<source-file src="libs/ebus-3.2.0.jar" target-dir="libs" />
+	<source-file src="libs/ebus-3.2.1.jar" target-dir="libs" />
 	<!-- <hook type="after_plugin_install" src="scripts/afterBuild.js" /> -->
     </platform>
 
