@@ -467,17 +467,22 @@ data:<input type="text" id="xmsg"  value="mymessage">
         });
    }
 
-   //resetdb
+   //clear db
    function resetdb(){
-        wechat.resetdb(function(){
-            console.log("error");
+        var pack = { db: "ChatHistory|Contacts|OpenRooms|ChatNews|ChatTsFlag"};
+        
+        wechat.resetdb( pack , function(data){
+            console.log( data );
         });
    }
 
-   //clear
+   //clear db && variable
    function clearall(){
-        alert("clear");
-        wechat.clear();
+        //reset db
+        resetdb()
+        
+        //clear
+        wechat.clear()
    }
 
    //isConnected

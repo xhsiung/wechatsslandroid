@@ -641,19 +641,23 @@ data:<input type="text" id="xmsg"  value="mymessage">
             console.log( obj );
         });
    }
-
-   //resetdb
-   function resetdb(){
-        wechat.resetdb(function(){
-            console.log("error");
+  
+    //clear db
+    function resetdb(){
+        var pack = { db: "ChatHistory|Contacts|OpenRooms|ChatNews|ChatTsFlag"};
+        
+        wechat.resetdb( pack , function(data){
+            console.log( data );
         });
-   }
-
-   //clear
-   function clearall(){
-        alert("clear");
-        wechat.clear();
-   }
+    }
+    //clear db && variable
+    function clearall(){
+        //reset db
+        resetdb()
+        
+        //clear
+        wechat.clear()
+    }
 
    //isConnected
    function isconnected(){
