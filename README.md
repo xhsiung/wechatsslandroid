@@ -644,7 +644,7 @@ data:<input type="text" id="xmsg"  value="mymessage">
   
     //clear db
     function resetdb(){
-        var pack = { db: "ChatHistory|Contacts|OpenRooms|ChatNews|ChatTsFlag"};
+        var pack = { db: "ChatHistory|Contacts|OpenRooms|ChatNews|ChatTsFlag|ChatSyncTs"};
         
         wechat.resetdb( pack , function(data){
             console.log( data );
