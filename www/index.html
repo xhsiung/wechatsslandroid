@@ -422,7 +422,11 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
    //getOpenRooms
    function getOpenRooms(){
+      //for personal
       var pack = { channel:"u002@u001" , from: "u002" };
+
+      //for group
+      //var pack = { channel:"u002@u001"};
       wechat.getOpenRooms( pack , function(obj){
           console.log(obj);
           for (var i=0 ; i< obj.data.length ; i++){
@@ -469,7 +473,7 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
    //clear db
    function resetdb(){
-        var pack = { db: "ChatHistory|Contacts|OpenRooms|ChatNews|ChatTsFlag"};
+        var pack = { db: "ChatHistory|Contacts|OpenRooms|ChatNews|ChatTsFlag|ChatSyncTs"};
         
         wechat.resetdb( pack , function(data){
             console.log( data );
