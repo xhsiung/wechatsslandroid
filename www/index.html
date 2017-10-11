@@ -9,6 +9,8 @@
 
     <title>Hello World</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/base64.min.js"></script>
+
 </head>
 
 <body>
@@ -62,6 +64,7 @@ channel:<input type="text" id="xchannel"  value="u002@u001">
 <button type="button" onclick="multiUnSubscribe()">multiUnSubscribe</button>
 
 <button type="button" onclick="send()" >send</button>
+<button type="button" onclick="sendwrapData()" >sendwrapData</button>
 <button type="button" onclick="sendGroup()" >sendGroup</button>
 <button type="button" onclick="querydbdate()" >querydbdate</button>
 <button type="button" onclick="getDeviceID()" >getDeviceID</button>
@@ -95,8 +98,9 @@ data:<input type="text" id="xmsg"  value="mymessage">
    };
 
    //custom event  recived  message
-   function OnEBusEvent( obj ){  //JSONObject
+   function OnEBusEvent( xobj ){  //JSONObject
        //check
+       var obj = wechat.unwrapData( xobj );
        console.log( obj );
 
        //do something here
@@ -136,7 +140,7 @@ data:<input type="text" id="xmsg"  value="mymessage">
    //save
    function saveChatSettings(){
         var conf = { serverip: "",
-                    port: 0,
+                    port: 2,
                     protocol: "https",
                     notifyTarget: "tw.com.bais.wechat.MainActivity",
                     hasNotify: 1,
@@ -225,8 +229,16 @@ data:<input type="text" id="xmsg"  value="mymessage">
    //send
    function send(){
         //var newchann =  wechat.getInviteChann($("#isid").val() , $("#itid").val()  )
-        var pack = { device:"desktop|mobile", channel: $("#xchannel").val(),sid: $("#isid").val() ,tid: $("#itid").val() , action:"send",  category:"user" ,data:$("#xmsg").val() };
+        //var pack = { device:"desktop|mobile", channel: $("#xchannel").val(),sid: $("#isid").val() ,tid: $("#itid").val() , action:"send",  category:"user" ,data:$("#xmsg").val() };
+        var pack = {"channel":"u002@u001","action":"send","sid":"u002","tid":"u001","gid":"","corps":0,"category":"","data":"123","status":0,"created_time":"","updated_time":"","location_name":"","location_address":"","location_phone":"","location_latitude":0,"location_longitude":0,"device":"desktop|mobile"}
+
         wechat.send( pack );
+   }
+
+   function sendwrapData(){
+        //var newchann =  wechat.getInviteChann($("#isid").val() , $("#itid").val()  )
+        var pack = { device:"desktop|mobile", channel: $("#xchannel").val(),sid: $("#isid").val() ,tid: $("#itid").val() , action:"send",  category:"user", dataType:"Text" , dataText:$("#xmsg").val() };
+        wechat.sendwrapData( pack );
    }
 
    //sendGroup
@@ -276,8 +288,8 @@ data:<input type="text" id="xmsg"  value="mymessage">
    function register(){
        //corps: -1 mobile_owner , action:"insert|update|delete|delallExcOwner"
 
-       //var obj = { action: "insert" ,m_id: $("#m_id").val(), custom_name: $("#custom_name").val() , corps: -1 } ;
-       var obj = { action: "insert" ,m_id: "u002", custom_name:"alex" , corps:-1,  created_time:"1479959062201",updated_time:"1479959062300" } ;
+       var obj = { action: "insert" ,m_id: $("#m_id").val(), custom_name: $("#custom_name").val() , corps: -1 } ;
+       //var obj = { action: "insert" ,m_id: "u20696", custom_name:"alex" , corps:-1,  created_time:"1479959062201",updated_time:"1479959062300" } ;
 
        var obj2 = { action: "insert" ,m_id: "u001", custom_name:"xhsiung" ,  created_time:"1479959062501",updated_time:"1479959062500" } ;
 
@@ -423,10 +435,11 @@ data:<input type="text" id="xmsg"  value="mymessage">
    //getOpenRooms
    function getOpenRooms(){
       //for personal
-      var pack = { channel:"u002@u001" , from: "u002" };
+      //var pack = { channel:"u002@u001" , from: "u002" };
 
       //for group
-      //var pack = { channel:"u002@u001"};
+      var pack = { channel:"u002@u001"  };
+
       wechat.getOpenRooms( pack , function(obj){
           console.log(obj);
           for (var i=0 ; i< obj.data.length ; i++){
@@ -471,22 +484,17 @@ data:<input type="text" id="xmsg"  value="mymessage">
         });
    }
 
-   //clear db
+   //resetdb
    function resetdb(){
-        var pack = { db: "ChatHistory|Contacts|OpenRooms|ChatNews|ChatTsFlag|ChatSyncTs"};
-        
-        wechat.resetdb( pack , function(data){
-            console.log( data );
+        wechat.resetdb(function(){
+            console.log("error");
         });
    }
 
-   //clear db && variable
+   //clear
    function clearall(){
-        //reset db
-        resetdb()
-        
-        //clear
-        wechat.clear()
+        alert("clear");
+        wechat.clear();
    }
 
    //isConnected
