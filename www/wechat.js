@@ -97,6 +97,36 @@
         cordova.exec( null , null , "WeChat", "send" , [arg0]);
     }
 
+    //sendwrapData
+    WeChat.prototype.sendwrapData = function( arg0 ){
+        var bobj={};
+        bobj[ "data" + arg0["dataType"]  ] =  arg0[ "data" + arg0["dataType"]  ] ;
+        bobj[ "dataType" ] =  arg0["dataType"];
+        arg0["data"] = Base64.encode( JSON.stringify( bobj ) );
+
+        cordova.exec( null , null , "WeChat", "send" , [arg0]);
+    }
+
+    WeChat.prototype.unwrapData = function( arg0 ){
+        var arrData = [] ;
+        for (var i=0; i < arg0.data.length ; i++){
+             var obj = arg0.data[i];
+             try{
+                var o = JSON.parse( Base64.decode( obj["data"] ) );
+                console.log( obj );
+                delete obj["data"];
+                obj[ "dataType" ] = o.dataType;
+                obj["data"+o.dataType] = o[ "data" + o.dataType ];
+                obj["data"] = o[ "data" + o.dataType ] ;
+                arrData.push( obj );
+             }catch (e){
+                arrData.push( obj );
+             }
+        }
+
+        return { data: arrData };
+    }
+
     //secretInvite
     WeChat.prototype.secretInvite = function(arg0){
         cordova.exec( null , null , "WeChat", "secretInvite" , [arg0]);
@@ -104,7 +134,6 @@
 
     //notify
     WeChat.prototype.notify = function(arg0){
-
             cordova.exec( null , null , "WeChat", "notify" , [arg0]);
     }
 
@@ -242,6 +271,8 @@
         cordova.exec( successCallback , null , "WeChat", "isConnected" , []);
     }
 
+
     var wechat = new WeChat();
     module.exports = wechat;
+
 
