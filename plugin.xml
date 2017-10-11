@@ -51,7 +51,7 @@
 	<source-file src="libs/ebus-3.2.9.jar" target-dir="libs" />
 	<!-- <hook type="after_plugin_install" src="scripts/afterBuild.js" /> -->
 	
-	<asset src="www/base64.min.js" target="www/js/base64.min.js" />
+	<asset src="www/base64.min.js" target="js/base64.min.js" />
     </platform>
 
 </plugin>
