@@ -1,3 +1,4 @@
+cordova.define("tw.com.bais.wechat.WeChat", function(require, exports, module) {
     var WeChat = function(){
        var self = this ;
        self.deviceid = null ;
@@ -100,10 +101,15 @@
     //sendwrapData
     WeChat.prototype.sendwrapData = function( arg0 ){
         var bobj={};
-        bobj[ "data" + arg0["dataType"]  ] =  arg0[ "data" + arg0["dataType"]  ] ;
+        var vdata = arg0[ "data" + arg0["dataType"]  ] ;
+        if ( typeof vdata != 'string'){
+            console.log(  bobj[ "data" + arg0["dataType"]  ]  + " is not string");
+            return;
+        }
+
+        bobj[ "data" + arg0["dataType"]  ] =  vdata ;
         bobj[ "dataType" ] =  arg0["dataType"];
         arg0["data"] = Base64.encode( JSON.stringify( bobj ) );
-
         cordova.exec( null , null , "WeChat", "send" , [arg0]);
     }
 
@@ -113,7 +119,6 @@
              var obj = arg0.data[i];
              try{
                 var o = JSON.parse( Base64.decode( obj["data"] ) );
-                console.log( obj );
                 delete obj["data"];
                 obj[ "dataType" ] = o.dataType;
                 obj["data"+o.dataType] = o[ "data" + o.dataType ];
@@ -276,3 +281,4 @@
     module.exports = wechat;
 
 
+});

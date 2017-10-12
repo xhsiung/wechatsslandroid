@@ -215,7 +215,7 @@ data:<input type="text" id="xmsg"  value="mymessage">
         var pack = {multichanns:[{channel:"u002@u001"},
                                  {channel:"u003@u002"},
                                  {channel:$("#xchannel").val() }]};
-            wechat.multiSubscribe(pack);
+        wechat.multiSubscribe(pack);
     }
 
     function multiUnSubscribe(){
@@ -262,13 +262,14 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
    //querydbdate
    function querydbdate(){
-        var pack = { channel:"u009@u001" ,offset:0, limit:10 };
+        var pack = { channel:"u002@u001",offset:0, limit:10 };
         console.log(pack);
         wechat.querydbdate( pack , function(data){
-            console.log( data );
+            var xdata = wechat.unwrapData( data );
+            console.log( xdata );
 
         } , function(err){
-            alert("eror");
+            alert("error");
         });
    }
 
@@ -380,28 +381,28 @@ data:<input type="text" id="xmsg"  value="mymessage">
    }
 
 
-   //unreadchat
+    //unreadchat
    function unreadchat(){
         wechat.unreadchat( function(data){
-            console.log( data );
+            var xdata = wechat.unwrapData(data);
+            console.log( xdata );
         });
    }
 
-
-    function secretInvite(){
+   function secretInvite(){
         //channel is tid , invite channel
         var pack = { sid : $("#isid").val() , tid: $("#itid").val() } ;
         wechat.secretInvite( pack );
-    }
+   }
 
-    function delChatHistory(){
+   function delChatHistory(){
         //var pack = { cid:"uxxxx12344543534534"} ;
         var pack = { channel:"u002@u001"} ;
 
         wechat.del_chat_history( pack , function(data){
             alert("row modify:" + data );
         });
-    }
+   }
 
 
    //undelivered
@@ -534,11 +535,12 @@ data:<input type="text" id="xmsg"  value="mymessage">
    //wechatOnUnReadChatInit
    function wechatOnUnReadChatInit( obj  ){
        console.log( "wechatOnUnReadChatInit" );
+       var xobj = wechat.unwrapData( obj );
        /*
        for (var i=0 ; i< obj.data.length ; i++){
             console.log( obj.data[i] );
        }*/
-       console.log( obj );
+       console.log( xobj );
    }
 
 
