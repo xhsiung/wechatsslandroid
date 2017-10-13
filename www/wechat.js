@@ -1,3 +1,4 @@
+cordova.define("tw.com.bais.wechat.WeChat", function(require, exports, module) {
     var WeChat = function(){
        var self = this ;
        self.deviceid = null ;
@@ -102,7 +103,7 @@
         var bobj={};
         var vdata = arg0[ "data" + arg0["dataType"]  ] ;
         if ( typeof vdata != 'string'){
-            console.log( vdata  + " is not string");
+            console.log(   vdata  + " is not string");
             return;
         }
 
@@ -117,17 +118,28 @@
         for (var i=0; i < arg0.data.length ; i++){
              var obj = arg0.data[i];
              try{
-                var o = JSON.parse( Base64.decode( obj["data"] ) );
-                delete obj["data"];
-                obj[ "dataType" ] = o.dataType;
-                obj["data"+o.dataType] = o[ "data" + o.dataType ];
-                obj["data"] = o[ "data" + o.dataType ] ;
+                var o = null;
+                if ( obj["data"] !== 'undefined' && obj["data"] != "" ){
+                    o = JSON.parse( Base64.decode( obj["data"] ) );
+                    delete obj["data"];
+                    obj[ "dataType" ] = o.dataType;
+                    obj["data"+o.dataType] = o[ "data" + o.dataType ];
+                    obj["data"] = o[ "data" + o.dataType ] ;
+
+                //for unread
+                }else if ( typeof obj["last_message"] !== 'undefined' &&  obj["data"] == "" ){
+                    o = JSON.parse( Base64.decode( obj["last_message"] ) );
+                    delete obj["last_message"];
+                    obj[ "dataType" ] = o.dataType;
+                    obj["data"+o.dataType] = o[ "data" + o.dataType ];
+                    obj["last_message"] = o[ "data" + o.dataType ] ;
+                }
+
                 arrData.push( obj );
              }catch (e){
                 arrData.push( obj );
              }
         }
-
         return { data: arrData };
     }
 
@@ -148,7 +160,11 @@
 
     //querydbdate
     WeChat.prototype.querydbdate = function(arg0 ,successCallback,errorCallback){
-            cordova.exec( successCallback , errorCallback , "WeChat", "querydbdate" , [arg0]);
+            function querydbdateSuccessCallback(obj){
+                       var xobj = wechat.unwrapData(obj);
+                       successCallback(xobj);
+            }
+            cordova.exec( querydbdateSuccessCallback , errorCallback , "WeChat", "querydbdate" , [arg0]);
     }
 
     //deviceid
@@ -194,7 +210,6 @@
         return max + "@" + min ;
     }
 
-    //unreadchat
     WeChat.prototype.unreadchat = function( successCallback ){
         cordova.exec( successCallback , null , "WeChat", "unreadchat" , []);
     }
@@ -275,8 +290,6 @@
         cordova.exec( successCallback , null , "WeChat", "isConnected" , []);
     }
 
-
     var wechat = new WeChat();
     module.exports = wechat;
-
-
+});
