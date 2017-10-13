@@ -84,7 +84,6 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
 <button type="button" onclick="javascript:$('#message').empty()" >myclear</button>
 
-
 <div id="message"></div>
 
 <script type="text/javascript" src="cordova.js"></script>
@@ -94,13 +93,14 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
    document.addEventListener("deviceready", onDeviceReady, false);
    function onDeviceReady() {
-       window.addEventListener("wechatevent", OnEBusEvent, false);
+       window.addEventListener("wechatevent", function( obj ){
+            OnEBusEvent( wechat.unwrapData(obj) );
+       }, false);
    };
 
    //custom event  recived  message
-   function OnEBusEvent( xobj ){  //JSONObject
+   function OnEBusEvent( obj ){  //JSONObject
        //check
-       var obj = wechat.unwrapData( xobj );
        console.log( obj );
 
        //do something here

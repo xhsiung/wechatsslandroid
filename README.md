@@ -259,7 +259,6 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
 <button type="button" onclick="javascript:$('#message').empty()" >myclear</button>
 
-
 <div id="message"></div>
 
 <script type="text/javascript" src="cordova.js"></script>
@@ -269,13 +268,14 @@ data:<input type="text" id="xmsg"  value="mymessage">
 
    document.addEventListener("deviceready", onDeviceReady, false);
    function onDeviceReady() {
-       window.addEventListener("wechatevent", OnEBusEvent, false);
+       window.addEventListener("wechatevent", function( obj ){
+            OnEBusEvent( wechat.unwrapData(obj) );
+       }, false);
    };
 
    //custom event  recived  message
-   function OnEBusEvent( xobj ){  //JSONObject
+   function OnEBusEvent( obj ){  //JSONObject
        //check
-       var obj = wechat.unwrapData( xobj );
        console.log( obj );
 
        //do something here
@@ -440,9 +440,7 @@ data:<input type="text" id="xmsg"  value="mymessage">
         var pack = { channel:"u002@u001",offset:0, limit:10 };
         console.log(pack);
         wechat.querydbdate( pack , function(data){
-            var xdata = wechat.unwrapData( data );
-            console.log( xdata );
-
+            console.log( data );
         } , function(err){
             alert("error");
         });
@@ -559,7 +557,6 @@ data:<input type="text" id="xmsg"  value="mymessage">
     //unreadchat
    function unreadchat(){
         wechat.unreadchat( function(data){
-            var xdata = wechat.unwrapData(data);
             console.log( xdata );
         });
    }
@@ -710,12 +707,11 @@ data:<input type="text" id="xmsg"  value="mymessage">
    //wechatOnUnReadChatInit
    function wechatOnUnReadChatInit( obj  ){
        console.log( "wechatOnUnReadChatInit" );
-       var xobj = wechat.unwrapData( obj );
        /*
        for (var i=0 ; i< obj.data.length ; i++){
             console.log( obj.data[i] );
        }*/
-       console.log( xobj );
+       console.log( obj );
    }
 
 
