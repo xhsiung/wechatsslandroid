@@ -224,8 +224,12 @@
     }
 
     //del undelivered
-    WeChat.prototype.undelivered = function( successCallback){
-        cordova.exec( successCallback , null , "WeChat", "undelivered" , []);
+    WeChat.prototype.undelivered = function( successCallback ){
+	function undeliveredSuccessCallback(obj){
+                var xobj = wechat.unwrapData(obj);
+        	successCallback(xobj);
+        }
+        cordova.exec( undeliveredSuccessCallback , null , "WeChat", "undelivered" , []);
     }
 
     //openrooms
