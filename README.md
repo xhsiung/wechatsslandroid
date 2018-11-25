@@ -3,7 +3,10 @@
 WeChat Project objectives is intergrated  communication for android .
 
 ## Structure 
-![image](https://raw.githubusercontent.com/xhsiung/wechat2/master/imgs/flow.png)
+![image](https://raw.githubusercontent.com/xhsiung/wechatsslandroid/master/imgs/flow.png)
+
+## View
+![image](https://raw.githubusercontent.com/xhsiung/wechatsslandroid/master/imgs/screen.jpg)
 
 ## Installation
 ```install
