@@ -4,7 +4,7 @@
     version="0.0.1">
     <name>WeChat</name>
     <engines>
-        <engine name="cordova" version=">=4.1.1"/>
+        <engine name="cordova" version=">=6.1.0"/>
     </engines>
 
     <js-module src="www/wechat.js" name="WeChat">
@@ -43,12 +43,12 @@
        		 </receiver>
         </config-file>
 	
-	<!-- <source-file src="libs/android-support-v4.jar" target-dir="libs" /> -->
-	<source-file src="libs/ShortcutBadger-master.jar" target-dir="libs" />
-	<source-file src="libs/eventbus-3.0.0.jar" target-dir="libs" />
-	<source-file src="libs/android-async-http-1.4.9.jar" target-dir="libs" />
-	<source-file src="libs/httpclient-4.3.6.jar" target-dir="libs" />
-	<source-file src="libs/ebus-3.2.11.jar" target-dir="libs" />
+	<!-- <lib-file src="libs/android-support-v4.jar" arch="libs" /> -->
+	<lib-file src="libs/ShortcutBadger-master.jar" arch="libs" />
+	<lib-file src="libs/eventbus-3.0.0.jar" arch="libs" />
+	<lib-file src="libs/android-async-http-1.4.9.jar" arch="libs" />
+	<lib-file src="libs/httpclient-4.3.6.jar" arch="libs" />
+	<lib-file src="libs/ebus-3.2.11.jar" arch="libs" />
 	<!-- <hook type="after_plugin_install" src="scripts/afterBuild.js" /> -->
 	
 	<asset src="www/index.js" target="js/index.js" />
